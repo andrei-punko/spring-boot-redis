@@ -20,7 +20,6 @@ public class Article {
     private LocalDateTime timestamp;
     private String author;
 
-    // TODO: populate two fields below
     private LocalDateTime dateCreated;
     private LocalDateTime dateUpdated;
 }

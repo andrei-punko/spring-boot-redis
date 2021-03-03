@@ -11,11 +11,11 @@ public interface IArticleService {
 
     ArticleDto create(ArticleDto articleDto);
 
-    ArticleDto get(Long id);
+    ArticleDto get(String id);
 
-    void update(Long id, ArticleUpdateDto articleUpdateDto);
+    void update(String id, ArticleUpdateDto articleUpdateDto);
 
-    void delete(Long id);
+    void delete(String id);
 
     List<ArticleDto> getAll();
 }

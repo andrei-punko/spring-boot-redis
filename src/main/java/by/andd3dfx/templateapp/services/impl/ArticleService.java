@@ -8,6 +8,7 @@ import by.andd3dfx.templateapp.persistence.dao.ArticleRepository;
 import by.andd3dfx.templateapp.persistence.entities.Article;
 import by.andd3dfx.templateapp.services.IArticleService;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,10 @@ public class ArticleService implements IArticleService {
     @Transactional
     @Override
     public ArticleDto create(ArticleDto articleDto) {
+        LocalDateTime now = LocalDateTime.now();
+        articleDto.setDateCreated(now);
+        articleDto.setDateUpdated(now);
+
         Article entity = articleMapper.toArticle(articleDto);
         Article savedEntity = articleRepository.save(entity);
         return articleMapper.toArticleDto(savedEntity);
@@ -36,7 +41,7 @@ public class ArticleService implements IArticleService {
 
     @Transactional(readOnly = true)
     @Override
-    public ArticleDto get(Long id) {
+    public ArticleDto get(String id) {
         return articleRepository.findById(id)
             .map(articleMapper::toArticleDto)
             .orElseThrow(() -> new ArticleNotFoundException(id));
@@ -44,10 +49,11 @@ public class ArticleService implements IArticleService {
 
     @Transactional
     @Override
-    public void update(Long id, ArticleUpdateDto articleUpdateDto) {
+    public void update(String id, ArticleUpdateDto articleUpdateDto) {
         articleRepository.findById(id)
             .map(article -> {
                 articleMapper.toArticle(articleUpdateDto, article);
+                article.setDateUpdated(LocalDateTime.now());
                 Article savedArticle = articleRepository.save(article);
                 return articleMapper.toArticleDto(savedArticle);
             }).orElseThrow(() -> new ArticleNotFoundException(id));
@@ -55,7 +61,7 @@ public class ArticleService implements IArticleService {
 
     @Transactional
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         try {
             articleRepository.deleteById(id);
         } catch (EmptyResultDataAccessException ex) {

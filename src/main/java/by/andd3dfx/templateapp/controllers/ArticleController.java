@@ -61,7 +61,7 @@ public class ArticleController {
     public ArticleDto readArticle(
         @ApiParam("Article's id")
         @NotNull
-        @PathVariable Long id
+        @PathVariable String id
     ) {
         return articleService.get(id);
     }
@@ -75,7 +75,7 @@ public class ArticleController {
     public void updateArticle(
         @ApiParam("Article's id")
         @NotNull
-        @PathVariable Long id,
+        @PathVariable String id,
         @ApiParam("Updated fields of article")
         @Validated
         @RequestBody ArticleUpdateDto articleUpdateDto
@@ -93,7 +93,7 @@ public class ArticleController {
     public void deleteArticle(
         @ApiParam("Article's id")
         @NotNull
-        @PathVariable Long id
+        @PathVariable String id
     ) {
         articleService.delete(id);
     }

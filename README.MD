@@ -1,4 +1,6 @@
 
+[![Java CI with Maven](https://github.com/andrei-punko/spring-boot-redis/actions/workflows/maven.yml/badge.svg)](https://github.com/andrei-punko/spring-boot-redis/actions/workflows/maven.yml)
+
 # Spring Boot application with Redis in persistence layer
 
 Based on [Spring Boot app template](https://github.com/andrei-punko/spring-boot-template)

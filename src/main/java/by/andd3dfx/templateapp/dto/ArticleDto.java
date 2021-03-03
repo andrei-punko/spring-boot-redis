@@ -17,8 +17,8 @@ import org.springframework.data.redis.core.RedisHash;
 public class ArticleDto implements Serializable {
 
     @Null(message = "Article id shouldn't be present")
-    @ApiModelProperty(notes = "The database generated article ID")
-    private Long id;
+    @ApiModelProperty(notes = "Article ID")
+    private String id;
 
     @NotNull(message = "Title should be populated")
     @Size(min = 1, max = 100, message = "Title length must be between 1 and 100")
