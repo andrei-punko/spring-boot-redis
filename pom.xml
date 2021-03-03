@@ -10,10 +10,11 @@
 	</parent>
 
 	<groupId>by.andd3dfx</groupId>
-	<artifactId>spring-boot-template</artifactId>
+	<artifactId>spring-boot-redis</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot-template</name>
-	<description>Template project for Spring Boot</description>
+
+	<name>spring-boot-redis</name>
+	<description>Spring Boot application with Redis as persistence layer</description>
 
 	<properties>
 		<java.version>9</java.version>

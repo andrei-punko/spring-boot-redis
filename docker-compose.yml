@@ -11,10 +11,10 @@ services:
     ports:
       - 6379:6379
 
-  backend-template-app:
-    image: backend-template-app:latest
+  spring-boot-redis-app:
+    image: spring-boot-redis-app:latest
     network_mode: bridge
-    container_name: backend-template-app
+    container_name: spring-boot-redis-app
     labels:
       kompose.image-pull-policy: Never
       kompose.service.type: LoadBalancer

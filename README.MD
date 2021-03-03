@@ -16,33 +16,29 @@ Supports CRUD set of operations and R with pagination
     mvn clean install
 
 #### Build Docker image with application inside:
-    docker build ./ -t backend-template-app
+    docker build ./ -t spring-boot-redis-app
 
 ## Start application using starting script:
 Use [run.bat](./run.bat) script
 
-## Start application (vs in-memory DB H2) by running executable jar:
-    java -jar target/spring-boot-template-0.0.1-SNAPSHOT.jar \
-     --spring.datasource.url=jdbc:h2:mem:testdb \
-     --spring.datasource.username=sa \
-     --spring.datasource.password=password \
-     --spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect
+## Start application by running executable jar (Redis should be started before that manually):
+    java -jar target/spring-boot-redis-0.0.1-SNAPSHOT.jar \
+     --spring.redis.host=localhost \
+     --spring.redis.port=6379
 
-## Same thing but using Spring profile to determine properties:
-    java -jar target/spring-boot-template-0.0.1-SNAPSHOT.jar \
+## Same thing but using Spring profile to determine properties (Redis should be started before that manually):
+    java -jar target/spring-boot-redis-0.0.1-SNAPSHOT.jar \
      --spring.profiles.active=dev
 
-## Start application (vs in-memory DB H2) using Maven:
+## Start application using Maven (Redis should be started before that manually):
     mvn spring-boot:run -Dspring-boot.run.arguments="\
-    --spring.datasource.url=jdbc:h2:mem:testdb \
-    --spring.datasource.username=sa \
-    --spring.datasource.password=password \
-    --spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect"
+     --spring.redis.host=localhost \
+     --spring.redis.port=6379
 
-## Same thing but using Spring profile to determine properties:
+## Same thing but using Spring profile to determine properties (Redis should be started before that manually):
     mvn spring-boot:run -Dspring-boot.run.arguments=--spring.profiles.active=dev
 
-## Start application using set of two Docker containers - one with Postgres DB and another with application:
+## Start application using set of two Docker containers - one with Redis and another with application:
     docker-compose up
 
 ## Link for quick check:  
