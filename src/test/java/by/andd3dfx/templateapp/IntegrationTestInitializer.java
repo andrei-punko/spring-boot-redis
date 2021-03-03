@@ -4,18 +4,17 @@ import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.lifecycle.Startables;
+import org.testcontainers.utility.DockerImageName;
 
 import java.util.Map;
 import java.util.stream.Stream;
 
-/**
- * According to https://reflectoring.io/spring-boot-flyway-testcontainers/
- */
 public class IntegrationTestInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
-    private static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:9.6.20");
+    private static GenericContainer redis = new GenericContainer(DockerImageName.parse("redis:6.2.1-alpine"))
+            .withExposedPorts(6379);
 
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {
@@ -28,17 +27,16 @@ public class IntegrationTestInitializer implements ApplicationContextInitializer
         environment.getPropertySources().addFirst(propertySource);
     }
 
-    private static void startContainers() {
-        Startables.deepStart(Stream.of(postgres)).join();
+    private void startContainers() {
+        Startables.deepStart(Stream.of(redis)).join();
         // we can add further containers
         // here like rabbitmq or other databases
     }
 
-    private static Map<String, String> createConnectionConfiguration() {
+    private static Map<String, Object> createConnectionConfiguration() {
         return Map.of(
-                "DB_URL", postgres.getJdbcUrl(),
-                "DB_USERNAME", postgres.getUsername(),
-                "DB_PASSWORD", postgres.getPassword()
+                "REDIS_HOST", redis.getHost(),
+                "REDIS_PORT", redis.getFirstMappedPort()
         );
     }
 }

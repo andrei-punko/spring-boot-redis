@@ -3,15 +3,18 @@ package by.andd3dfx.templateapp.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import io.swagger.annotations.ApiModelProperty;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 import lombok.Data;
+import org.springframework.data.redis.core.RedisHash;
 
 @Data
 @JsonInclude(Include.NON_NULL)
-public class ArticleDto {
+public class ArticleDto implements Serializable {
 
     @Null(message = "Article id shouldn't be present")
     @ApiModelProperty(notes = "The database generated article ID")

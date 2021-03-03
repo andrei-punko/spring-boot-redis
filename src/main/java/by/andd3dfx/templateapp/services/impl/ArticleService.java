@@ -7,6 +7,8 @@ import by.andd3dfx.templateapp.mappers.ArticleMapper;
 import by.andd3dfx.templateapp.persistence.dao.ArticleRepository;
 import by.andd3dfx.templateapp.persistence.entities.Article;
 import by.andd3dfx.templateapp.services.IArticleService;
+
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -63,8 +65,10 @@ public class ArticleService implements IArticleService {
 
     @Transactional(readOnly = true)
     @Override
-    public Page<ArticleDto> getAll(Pageable pageable) {
-        final Page<Article> pagedResult = articleRepository.findAll(pageable);
-        return pagedResult.map(articleMapper::toArticleDto);
+    public List<ArticleDto> getAll() {
+        List<ArticleDto> result = new ArrayList<>();
+        articleRepository.findAll()
+                .forEach(article -> result.add(articleMapper.toArticleDto(article)));
+        return result;
     }
 }
