@@ -9,9 +9,11 @@ import java.time.LocalDateTime;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.redis.core.RedisHash;
 
+@Builder
 @Data
 @JsonInclude(Include.NON_NULL)
 public class ArticleDto implements Serializable {
