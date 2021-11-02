@@ -1,14 +1,15 @@
 
-[![Java CI with Maven](https://github.com/andrei-punko/spring-boot-redis/actions/workflows/maven.yml/badge.svg)](https://github.com/andrei-punko/spring-boot-redis/actions/workflows/maven.yml)
-
 # Spring Boot application with Redis in persistence layer
+[![Java CI with Maven](https://github.com/andrei-punko/spring-boot-redis/actions/workflows/maven.yml/badge.svg)](https://github.com/andrei-punko/spring-boot-redis/actions/workflows/maven.yml)
+[![Coverage](.github/badges/jacoco.svg)](https://github.com/andrei-punko/spring-boot-redis/actions/workflows/maven.yml)
+[![Branches](.github/badges/branches.svg)](https://github.com/andrei-punko/spring-boot-redis/actions/workflows/maven.yml)
 
 Based on [Spring Boot app template](https://github.com/andrei-punko/spring-boot-template)
 
 Includes web-server on port 9080 with `/articles` endpoint exposed.  
 Supports CRUD set of operations and R with pagination
 
-## Prerequisities:
+## Prerequisites:
 - JDK 11
 - Maven 3
 
