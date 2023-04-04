@@ -12,7 +12,8 @@ services:
       - 6379:6379
 
   spring-boot-redis-app:
-    image: spring-boot-redis-app:latest
+    build: ./
+    restart: always
     network_mode: bridge
     container_name: spring-boot-redis-app
     labels:
