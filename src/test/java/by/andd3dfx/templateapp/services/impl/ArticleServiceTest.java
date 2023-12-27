@@ -17,6 +17,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 
 @ExtendWith(MockitoExtension.class)
 class ArticleServiceTest {
@@ -81,15 +84,16 @@ class ArticleServiceTest {
         final Article article2 = Article.builder()
                 .id(Long.valueOf("347"))
                 .build();
-        when(articleRepository.findAll()).thenReturn(List.of(article1, article2));
+        final Pageable pageable = Pageable.ofSize(10);
+        when(articleRepository.findAll(pageable)).thenReturn(new SliceImpl(List.of(article1, article2)));
         final ArticleDto articleDto1 = ArticleDto.builder().id("345").build();
         final ArticleDto articleDto2 = ArticleDto.builder().id("347").build();
         when(articleMapper.toArticleDto(article1)).thenReturn(articleDto1);
         when(articleMapper.toArticleDto(article2)).thenReturn(articleDto2);
 
-        List<ArticleDto> result = service.getAll();
+        Slice<ArticleDto> result = service.getAll(pageable);
 
-        assertThat(result.size(), is(2));
+        assertThat(result.getNumberOfElements(), is(2));
         assertThat(result, hasItems(articleDto1, articleDto2));
     }
 }

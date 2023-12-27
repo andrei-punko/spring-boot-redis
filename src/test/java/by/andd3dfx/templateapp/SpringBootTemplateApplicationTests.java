@@ -10,5 +10,6 @@ class SpringBootTemplateApplicationTests {
 
 	@Test
 	void contextLoads() {
+		// do nothing
 	}
 }

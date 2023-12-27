@@ -13,17 +13,16 @@ import java.util.stream.Stream;
 
 public class IntegrationTestInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
-    private static GenericContainer redis = new GenericContainer(DockerImageName.parse("redis:6.2.1-alpine"))
-            .withExposedPorts(6379);
+    private static GenericContainer redis = new GenericContainer(
+            DockerImageName.parse("redis:6.2.1-alpine")
+    ).withExposedPorts(6379);
 
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {
         startContainers();
         ConfigurableEnvironment environment = applicationContext.getEnvironment();
 
-        MapPropertySource propertySource = new MapPropertySource(
-                "test-containers", (Map) createConnectionConfiguration()
-        );
+        MapPropertySource propertySource = new MapPropertySource("test-containers", createConnectionConfiguration());
         environment.getPropertySources().addFirst(propertySource);
     }
 
