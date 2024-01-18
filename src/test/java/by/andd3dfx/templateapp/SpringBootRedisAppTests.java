@@ -6,7 +6,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 @ContextConfiguration(initializers = IntegrationTestInitializer.class)
 @SpringBootTest
-class SpringBootTemplateApplicationTests {
+class SpringBootRedisAppTests {
 
 	@Test
 	void contextLoads() {

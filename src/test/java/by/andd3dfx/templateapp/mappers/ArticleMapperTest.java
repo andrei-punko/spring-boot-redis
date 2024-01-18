@@ -42,22 +42,6 @@ class ArticleMapperTest {
     }
 
     @Test
-    void toArticleDtoList() {
-        Article article = buildArticle();
-        List<Article> articles = Arrays.asList(article);
-
-        List<ArticleDto> articleDtoItems = mapper.toArticleDtoList(articles);
-
-        assertThat("Wrong result list size", articleDtoItems.size(), is(1));
-        checkCompareAssertions(articleDtoItems.get(0), article);
-    }
-
-    @Test
-    void toArticleDtoListForNull() {
-        assertThat(mapper.toArticleDtoList(null), nullValue());
-    }
-
-    @Test
     void toArticle() {
         ArticleDto articleDto = buildArticleDto();
 
@@ -107,7 +91,7 @@ class ArticleMapperTest {
 
     private Article buildArticle() {
         Article article = new Article();
-        article.setId(123L);
+        article.setId("123");
         article.setTitle("Some tittle value");
         article.setSummary("Some summary value");
         article.setText("Some text");

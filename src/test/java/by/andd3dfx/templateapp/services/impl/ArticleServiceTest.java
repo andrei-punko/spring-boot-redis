@@ -17,6 +17,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
@@ -36,7 +38,7 @@ class ArticleServiceTest {
         final ArticleDto articleDto = ArticleDto.builder().build();
         final Article article = Article.builder().build();
         final Article savedArticle = Article.builder()
-                .id(232L)
+                .id("232")
                 .build();
         when(articleMapper.toArticle(articleDto)).thenReturn(article);
         when(articleRepository.save(article)).thenReturn(savedArticle);
@@ -54,7 +56,7 @@ class ArticleServiceTest {
     void get() {
         final String ID = "345";
         final Article article = Article.builder()
-                .id(Long.valueOf(ID))
+                .id(ID)
                 .build();
         when(articleRepository.findById(ID)).thenReturn(Optional.of(article));
         final ArticleDto resultArticle = ArticleDto.builder()
@@ -70,6 +72,7 @@ class ArticleServiceTest {
     @Test
     void delete() {
         final String ID = "345";
+        when(articleRepository.existsById(ID)).thenReturn(true);
 
         service.delete(ID);
 
@@ -79,19 +82,20 @@ class ArticleServiceTest {
     @Test
     void getAll() {
         final Article article1 = Article.builder()
-                .id(Long.valueOf("345"))
+                .id("345")
                 .build();
         final Article article2 = Article.builder()
-                .id(Long.valueOf("347"))
+                .id("347")
                 .build();
         final Pageable pageable = Pageable.ofSize(10);
-        when(articleRepository.findAll(pageable)).thenReturn(new SliceImpl(List.of(article1, article2)));
+        when(articleRepository.findAll(Example.of(new Article()), pageable))
+                .thenReturn(new PageImpl(List.of(article1, article2)));
         final ArticleDto articleDto1 = ArticleDto.builder().id("345").build();
         final ArticleDto articleDto2 = ArticleDto.builder().id("347").build();
         when(articleMapper.toArticleDto(article1)).thenReturn(articleDto1);
         when(articleMapper.toArticleDto(article2)).thenReturn(articleDto2);
 
-        Slice<ArticleDto> result = service.getAll(pageable);
+        var result = service.getAll(pageable);
 
         assertThat(result.getNumberOfElements(), is(2));
         assertThat(result, hasItems(articleDto1, articleDto2));

@@ -6,7 +6,7 @@
 
 Based on [Spring Boot app template](https://github.com/andrei-punko/spring-boot-template)
 
-Includes web-server on port 9080 with `/articles` endpoint exposed.  
+Includes web-server on port 9080 with `/api/v1/articles` endpoint exposed.  
 Supports CRUD set of operations and R with pagination
 
 ## Prerequisites:
@@ -20,7 +20,7 @@ Supports CRUD set of operations and R with pagination
     docker build ./ -t spring-boot-redis-app
 
 ## Start application using starting script:
-Use [run.bat](./run.bat) script
+Use [run-in-docker.bat](./run-in-docker.bat) script
 
 ## Start application by running executable jar (Redis should be started before that manually):
     java -jar target/spring-boot-redis-0.0.1-SNAPSHOT.jar \
@@ -43,23 +43,23 @@ Use [run.bat](./run.bat) script
     docker-compose up
 
 ## Link for quick check:  
-http://localhost:9080/articles
+http://localhost:9080/api/v1/articles
 
 ## Swagger documentation:  
 http://localhost:9080/swagger-ui.html
 
 ## Useful CURL commands:
 - New article addition:  
-`curl -i -H "Accept: application/json" -H "Content-Type: application/json" -d '{ "title": "Some tittle", "text": "Some text", "summary": "bla-bla", "author": "Pushkin" }' -X POST http://localhost:9080/articles`
+`curl -i -H "Accept: application/json" -H "Content-Type: application/json" -d '{ "title": "Some tittle", "text": "Some text", "summary": "bla-bla", "author": "Pushkin" }' -X POST http://localhost:9080/api/v1/articles`
 
 - Get existing article:  
-`curl -i http://localhost:9080/articles/1`
+`curl -i http://localhost:9080/api/v1/articles/1`
 
 - Update existing article:  
-`curl -i -H "Accept: application/json" -H "Content-Type: application/json" -d '{ "title": "Another tittle" }' -X PATCH http://localhost:9080/articles/2`
+`curl -i -H "Accept: application/json" -H "Content-Type: application/json" -d '{ "title": "Another tittle" }' -X PATCH http://localhost:9080/api/v1/articles/2`
 
 - Get list of articles with pagination support:  
-`curl -i 'http://localhost:9080/articles?size=2&page=4&sort=author.firstName,DESC'`
+`curl -i 'http://localhost:9080/api/v1/articles?size=2&page=4&sort=author.firstName,DESC'`
 
 - Deletion of article:  
-`curl -i -X DELETE http://localhost:9080/articles/1`
+`curl -i -X DELETE http://localhost:9080/api/v1/articles/1`
