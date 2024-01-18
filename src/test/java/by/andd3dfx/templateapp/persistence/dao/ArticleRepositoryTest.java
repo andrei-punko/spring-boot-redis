@@ -53,7 +53,6 @@ class ArticleRepositoryTest {
         );
 
         assertThat("Wrong records amount", result.getNumberOfElements(), is(3));
-
         var articles = result.getContent();
         assertThat(articles.get(0), is(four));
         assertThat(articles.get(1), is(one));

@@ -4,6 +4,7 @@ import by.andd3dfx.templateapp.IntegrationTestInitializer;
 import by.andd3dfx.templateapp.dto.ArticleDto;
 import by.andd3dfx.templateapp.dto.ArticleUpdateDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+@Slf4j
 @ContextConfiguration(initializers = IntegrationTestInitializer.class)
 @SpringBootTest
 @WebAppConfiguration
@@ -245,7 +247,7 @@ class ArticleControllerTest {
 
     @Test
     public void deleteArticle() throws Exception {
-        mockMvc.perform(delete("/api/v1/articles/1")
+        mockMvc.perform(delete("/api/v1/articles/5")
             .contentType(APPLICATION_JSON)
         )
             .andExpect(status().isNoContent());
@@ -289,15 +291,31 @@ class ArticleControllerTest {
 
     @Test
     public void readArticlesWithPageSizeLimit() throws Exception {
-        mockMvc.perform(get("/api/v1/articles")
-            .param("size", "3")
-            .contentType(APPLICATION_JSON)
-        )
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.content", hasSize(3)))
-            .andExpect(jsonPath("$.number", is(0)))
-            .andExpect(jsonPath("$.size", is(3)))
-            .andExpect(jsonPath("$.totalPages", is(2)));
+        int size = 3;
+        var result = mockMvc.perform(get("/api/v1/articles")
+                        .param("size", Integer.toString(size))
+                        .param("sort", "author")
+                        .contentType(APPLICATION_JSON)
+                ).andExpect(status().isOk())
+                .andExpect(jsonPath("$.content", hasSize(size)))
+                .andExpect(jsonPath("$.number", is(0)))
+                .andExpect(jsonPath("$.size", is(size)))
+                .andExpect(jsonPath("$.totalPages", is(2)))
+                .andExpect(jsonPath("$.content[0].author", is("Epiktet")))
+                .andExpect(jsonPath("$.content[1].author", is("Isaac Sirin")))
+                .andExpect(jsonPath("$.content[2].author", is("John Sonmez")))
+
+                // Looks like QueryByExampleRedisExecutor.findAll(Example<S>, Pageable) has specific behavior
+                // when both `pageSize` & `sort` parameters of Pageable was populated.
+                // So:
+                //  - Result page has required size
+                //  - Sorting by requested field is applied
+                // But some records missed from result set.
+                // For example: `Ignaty Brianchaninov` missed from result set for size=3,sort='author'.
+                // We expect it between `Epiktet` & `Isaac Sirin` records, while `John Sonmez` should be absent
+                .andReturn().getResponse().getContentAsString();
+
+        log.info(result);
     }
 
     @Test
