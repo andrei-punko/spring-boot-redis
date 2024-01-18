@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 public class IntegrationTestInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
     private static GenericContainer redis = new GenericContainer(
-            DockerImageName.parse("redis:6.2.1-alpine")
+            DockerImageName.parse("redis:7.2-alpine")
     ).withExposedPorts(6379);
 
     @Override

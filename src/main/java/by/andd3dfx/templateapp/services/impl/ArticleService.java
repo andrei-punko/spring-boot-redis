@@ -7,14 +7,14 @@ import by.andd3dfx.templateapp.mappers.ArticleMapper;
 import by.andd3dfx.templateapp.persistence.dao.ArticleRepository;
 import by.andd3dfx.templateapp.persistence.entities.Article;
 import by.andd3dfx.templateapp.services.IArticleService;
-
-import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -58,17 +58,15 @@ public class ArticleService implements IArticleService {
     @Transactional
     @Override
     public void delete(String id) {
-        try {
+        if (articleRepository.existsById(id)) {
             articleRepository.deleteById(id);
-        } catch (EmptyResultDataAccessException ex) {
-            throw new ArticleNotFoundException(id);
-        }
+        } else throw new ArticleNotFoundException(id);
     }
 
     @Transactional(readOnly = true)
     @Override
     public Slice<ArticleDto> getAll(Pageable pageable) {
-        Slice<Article> pagedResult = articleRepository.findAll(pageable);
+        var pagedResult = articleRepository.findAll(Example.of(new Article()), pageable);
         return pagedResult.map(articleMapper::toArticleDto);
     }
 }

@@ -1,5 +1,6 @@
 package by.andd3dfx.templateapp.configs;
 
+import by.andd3dfx.templateapp.persistence.entities.Article;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,10 +27,10 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-        final RedisTemplate<String, Object> template = new RedisTemplate<>();
+    public RedisTemplate<String, Article> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, Article> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory);
-        template.setValueSerializer(new GenericToStringSerializer<>(Object.class));
+        template.setValueSerializer(new GenericToStringSerializer<>(Article.class));
         template.setEnableTransactionSupport(true);
         return template;
     }
