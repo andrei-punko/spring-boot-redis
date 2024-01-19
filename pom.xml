@@ -14,7 +14,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<name>spring-boot-redis</name>
-	<description>Spring Boot application with Redis as persistence layer</description>
+	<description>Spring Boot 3 application with Redis as persistence layer</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -23,8 +23,9 @@
 
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 		<lombok.version>1.18.30</lombok.version>
-		<swagger.version>3.0.0</swagger.version>
-		<swagger-annotations.version>1.6.12</swagger-annotations.version>
+		<springdoc.version>2.3.0</springdoc.version>
+		<springfox.version>3.0.0</springfox.version>
+		<swagger.version>1.6.12</swagger.version>
 		<testcontainers.version>1.19.3</testcontainers.version>
 	</properties>
 
@@ -82,22 +83,22 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.3.0</version>
+			<version>${springdoc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
-			<version>${swagger.version}</version>
+			<version>${springfox.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.swagger</groupId>
 			<artifactId>swagger-annotations</artifactId>
-			<version>${swagger-annotations.version}</version>
+			<version>${swagger.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.swagger</groupId>
 			<artifactId>swagger-models</artifactId>
-			<version>${swagger-annotations.version}</version>
+			<version>${swagger.version}</version>
 		</dependency>
 
 		<dependency>
@@ -171,8 +172,8 @@
 						</goals>
 					</execution>
 					<execution>
-						<id>generate-code-coverage-report</id>
-						<phase>test</phase>
+						<id>report</id>
+						<phase>prepare-package</phase>
 						<goals>
 							<goal>report</goal>
 						</goals>
