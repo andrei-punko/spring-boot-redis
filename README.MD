@@ -4,7 +4,7 @@
 [![Coverage](.github/badges/jacoco.svg)](https://github.com/andrei-punko/spring-boot-redis/actions/workflows/maven.yml)
 [![Branches](.github/badges/branches.svg)](https://github.com/andrei-punko/spring-boot-redis/actions/workflows/maven.yml)
 
-Based on [Spring Boot app template](https://github.com/andrei-punko/spring-boot-template)
+Based on [Spring Boot app template](https://github.com/andrei-punko/spring-boot-3-template)
 
 Includes web-server on port 9080 with `/api/v1/articles` endpoint exposed.  
 Supports CRUD set of operations and R with pagination
