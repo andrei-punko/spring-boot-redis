@@ -10,7 +10,7 @@ services:
     expose:
       - 6379
     ports:
-      - 6379:6379
+      - "6379:6379"
 
   spring-boot-redis-app:
     build: ./
@@ -23,7 +23,7 @@ services:
     expose:
       - 9080
     ports:
-      - 9080:9080
+      - "9080:9080"
     depends_on:
       - redis
     links:
