@@ -14,13 +14,17 @@ Supports CRUD set of operations and R with pagination
 - JDK 21
 
 ## How to build:
-    mvn clean install
+```shell
+mvn clean install
+```
 
-#### Build Docker image with application inside:
-    docker build ./ -t spring-boot-redis-app
+### Build Docker image with application inside:
+```shell
+docker build --no-cache ./ -t spring-boot-redis-app
+```
 
 ## Start application using starting script:
-Use [run-in-docker.bat](./run-in-docker.bat) script
+Use [run-in-docker.bat](run-in-docker.bat) script
 
 ## Start application by running executable jar (Redis should be started before that manually):
     java -jar target/spring-boot-redis-0.0.1-SNAPSHOT.jar \
@@ -50,16 +54,38 @@ http://localhost:9080/swagger-ui/index.html
 
 ## Useful CURL commands:
 - New article addition:  
-`curl -i -H "Accept: application/json" -H "Content-Type: application/json" -d '{ "title": "Some tittle", "text": "Some text", "summary": "bla-bla", "author": "Pushkin" }' -X POST http://localhost:9080/api/v1/articles`
+```shell
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -d '{ "title": "Some tittle", "text": "Some text", "summary": "bla-bla", "author": "Pushkin" }' -X POST http://localhost:9080/api/v1/articles
+```
 
 - Get existing article:  
-`curl -i http://localhost:9080/api/v1/articles/1`
+```shell
+curl -i http://localhost:9080/api/v1/articles/1
+```
 
 - Update existing article:  
-`curl -i -H "Accept: application/json" -H "Content-Type: application/json" -d '{ "title": "Another tittle" }' -X PATCH http://localhost:9080/api/v1/articles/2`
+```shell
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -d '{ "title": "Another tittle" }' -X PATCH http://localhost:9080/api/v1/articles/2
+```
+
+- Get all articles:
+```shell
+curl -i http://localhost:9080/api/v1/articles
+```
 
 - Get list of articles with pagination support:  
-`curl -i 'http://localhost:9080/api/v1/articles?size=2&page=4&sort=author.firstName,DESC'`
+```shell
+curl -i 'http://localhost:9080/api/v1/articles?size=2&page=4&sort=author.firstName,DESC'
+```
 
 - Deletion of article:  
-`curl -i -X DELETE http://localhost:9080/api/v1/articles/1`
+```shell
+curl -i -X DELETE http://localhost:9080/api/v1/articles/1
+```
+
+## Run functional tests:
+
+    cd func-test
+    ./gradlew clean build
+
+Check functional test report [here](func-test/build/spock-reports/index.html)
