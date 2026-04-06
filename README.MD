@@ -2,7 +2,6 @@
 
 [![Java CI with Maven](https://github.com/andrei-punko/spring-boot-redis/actions/workflows/maven.yml/badge.svg)](https://github.com/andrei-punko/spring-boot-redis/actions/workflows/maven.yml)
 [![Coverage](.github/badges/jacoco.svg)](https://github.com/andrei-punko/spring-boot-redis/actions/workflows/maven.yml)
-[![Branches](.github/badges/branches.svg)](https://github.com/andrei-punko/spring-boot-redis/actions/workflows/maven.yml)
 
 Based on [Spring Boot app template](https://github.com/andrei-punko/spring-boot-3-template)
 
